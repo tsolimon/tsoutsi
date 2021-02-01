@@ -13,19 +13,21 @@ let blue= 0;
 let green = 0;
 let img;
 let flag = false;
-let user1;
-let user2;
+let uv;
+let start = false;
+let step;
+
 function preload(){
    song = loadSound('data/song.mp3');
    img = loadImage('data/tsoutsi.jpg');
    
 }
-function setup(x,y) {
+function setup() {
   createCanvas(400, 400);
   angleMode(DEGREES);
-  user1=x;
-  user2=y;
-  r= random(user1,user2);
+  uv = 50;
+  step = 40;
+  r=(uv,uv+step);
   button = createButton('START');
   button.position(width/3, 20);
   button.mousePressed(changeBG);
@@ -35,11 +37,12 @@ function draw() {
   background(red,green,blue);
   translate(200, 200);
   rotate(-90);
-   
+
 
   let hr = hour();
   let mn = minute();
   let sc = second();
+     if (start) {
   if (sc!=temp) { 
     timer ++;
   }
@@ -47,7 +50,7 @@ function draw() {
   if (timer>r){
     song.play();
   flag = true;
-   r=random(user1,user2);
+   r=random(uv,uv+step);
     timer=0;
   }
   if (timer>4){
@@ -93,11 +96,27 @@ function draw() {
 
    fill(255);
    noStroke();
- text(hr + ':' + mn + ':' + sc+'...'+ 'timer:'+ timer + '....alarm:' + int(r) , 10, 200);
+ text('Value:'+ uv +'...'+ 'Step:'+ step +'.........tsoutsiii.......'+ 'Timer:'+ timer + '...Alarm:' + int(r) , -180, 200);
+}
 }
 
+function keyPressed() {
+  if (keyCode === LEFT_ARROW){    
+   uv = uv-10;
+  }
+  else if(keyCode === RIGHT_ARROW){
+  uv = uv+10;
+  }
+   else if(keyCode === UP_ARROW){
+ step = step+10;
+  }
+  else if(keyCode === DOWN_ARROW){
+ step = step-10;
+  }
+ }
 function changeBG() {
   red= 200;
   green=20;
   blue = 10;
+ start = true;
 }
